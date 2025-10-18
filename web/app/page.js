@@ -1,103 +1,66 @@
-import Image from "next/image";
+"use client";
+import React from "react";
+import { Calendar, MapPin, Ticket } from "lucide-react";
+
+const SHOWS = [
+  { date: "2025-11-08", venue: "Mxlan", city: "San Antonio, TX", doors: "7:00 PM", url: "#" },
+  { date: "2025-12-12", venue: "Paper Tiger", city: "San Antonio, TX", doors: "8:00 PM", url: "#" },
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="min-h-screen bg-neutral-50 text-neutral-900">
+      <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/80 backdrop-blur">
+        <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
+          <span className="text-2xl font-semibold tracking-tight">Armadillo</span>
+          <nav className="hidden md:flex items-center gap-6 text-sm">
+            <a href="#about" className="hover:opacity-70">About</a>
+            <a href="#shows" className="hover:opacity-70">Shows</a>
+            <a href="#blog" className="hover:opacity-70">Blog</a>
+            <a href="#contact" className="hover:opacity-70">Contact</a>
+          </nav>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </header>
+
+      <section className="border-b border-neutral-200">
+        <div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
+          <h1 className="text-5xl md:text-7xl font-semibold tracking-tight">Armadillo</h1>
+          <p className="mt-4 max-w-xl text-neutral-600">Notes from the road and what’s next — blog • music • shows.</p>
+        </div>
+      </section>
+
+      <section id="shows" className="border-b border-neutral-200">
+        <div className="mx-auto max-w-6xl px-4 py-12">
+          <div className="flex items-center gap-2 mb-6">
+            <Calendar className="h-5 w-5" />
+            <h2 className="text-2xl font-semibold">Latest shows</h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {SHOWS.map((s) => {
+              const d = new Date(s.date + "T00:00:00");
+              const pretty = d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric", weekday: "short" });
+              return (
+                <div key={s.date + s.venue} className="rounded-xl border border-neutral-200 bg-white p-5">
+                  <div className="text-lg font-medium">{pretty}</div>
+                  <div className="mt-1 flex items-center gap-2 text-neutral-600">
+                    <MapPin className="h-4 w-4"/>{s.venue} • {s.city}
+                  </div>
+                  <div className="mt-1 text-neutral-600">Doors {s.doors}</div>
+                  <a href={s.url} className="mt-4 inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm hover:bg-neutral-50">
+                    <Ticket className="h-4 w-4" /> Tickets
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-neutral-200">
+        <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-neutral-500">
+          © {new Date().getFullYear()} Armadillo
+        </div>
       </footer>
-    </div>
+    </main>
   );
 }
